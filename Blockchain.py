@@ -15,10 +15,10 @@ class Blockchain:
     def verify_transaction_signature(self, sender_address, signature, transaction):
         pass
 
-    def submit_transaction(self, sender_address, recipient_address, value, signature):
+    def submit_transaction(self, sender_address, receiver_address, value, signature):
         pass
 
-    def create_block(self, nounce, previous_hash):
+    def create_block(self, nonce, previous_hash):
         pass
 
     def hash(self, block):
