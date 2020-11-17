@@ -16,3 +16,12 @@ class Wallet:
         :return:  the public key as the address of wallet
         '''
         return binascii.unhexlify(self._public_key.export_key(format="DER")).decode('ascii')
+
+    def to_dict(self):
+        '''
+        :return: dictionary representing the wallet
+        '''
+        return {
+            'private_key':binascii.unhexlify(self._private_key.export_key(format="DER")).decode('ascii'),
+            'public_key':binascii.unhexlify(self._public_key.export_key(format="DER")).decode('ascii')
+        }
