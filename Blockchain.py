@@ -33,7 +33,7 @@ class Blockchain:
         pass
 
     @staticmethod
-    def hash(block):
+    def hash_block(block):
         """
         :param block: <dict> block
         :return: <str> the SHA-256 hash of block
@@ -41,8 +41,31 @@ class Blockchain:
         block_str=json.dump(block,sort_keys=True).encode()
         return sha256(block_str).hexdigest()
 
-    def proof_of_work(self):
-        pass
+    def proof_of_work(self,last_nonce):
+        """
+        proof of work algorithm:
+        finds the nonce that expression '{last_nonce}{nonce}' ends in 4 zeroes
+        :param last_nonce: <int> the nonce of last block
+        :return: <int> newly found nonce
+        """
+        nonce=0
+        while self.validate_nonce(last_nonce,nonce) is False:
+            nonce +=1
+
+        return nonce
+    @staticmethod
+    def validate_nonce(last_nonce,nonce):
+        """
+        checks if hash(last_nonce,nonce) contains 4 ending zeroes ?
+
+        :param last_nonce: <int> previous nonce
+        :param nonce:  <int> current testing nonce
+        :return:  <bool> true if condition is true
+
+        """
+        expr=f'{last_nonce}{nonce}'.encode()
+        expr_hash=sha256(expr).hexdigest()
+        return expr_hash[:-4]=="0000"
 
     def valid_chain(self):
         pass
