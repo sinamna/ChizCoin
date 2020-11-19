@@ -61,22 +61,23 @@ class Blockchain:
         block_str=json.dump(block,sort_keys=True).encode()
         return sha256(block_str).hexdigest()
 
-    def proof_of_work(self,last_nonce):
+    def proof_of_work(self,last_nonce,difficulty=4):
         """
         proof of work algorithm:
         finds the nonce that expression '{last_nonce}{nonce}' ends in 4 zeroes
         :param last_nonce: <int> the nonce of last block
+        :param difficulty" <int> the numb of ending zeroes
         :return: <int> newly found nonce
         """
         nonce=0
-        while self.validate_nonce(last_nonce,nonce) is False:
+        while self.validate_nonce(last_nonce,nonce,difficulty) is False:
             nonce +=1
 
         return nonce
     @staticmethod
-    def validate_nonce(last_nonce,nonce):
+    def validate_nonce(last_nonce,nonce,difficutly):
         """
-        checks if hash(last_nonce,nonce) contains 4 ending zeroes ?
+        checks if hash(last_nonce,nonce) contains ending zeroes as many as difficulty ?
 
         :param last_nonce: <int> previous nonce
         :param nonce:  <int> current testing nonce
@@ -85,7 +86,7 @@ class Blockchain:
         """
         expr=f'{last_nonce}{nonce}'.encode()
         expr_hash=sha256(expr).hexdigest()
-        return expr_hash[:-4]=="0000"
+        return expr_hash[:-4]=="0"*difficutly
 
     def valid_chain(self):
         pass
