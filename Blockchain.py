@@ -1,3 +1,4 @@
+from collections import OrderedDict
 from uuid import uuid4
 from Crypto.Hash import SHA256
 from Crypto.PublicKey import RSA
@@ -7,6 +8,9 @@ from urllib.parse import urlparse
 import json
 import time
 import binascii
+
+MINNING_SENDER="BLOCKCHAIN"
+MINNING_REWARD=50
 
 class Blockchain:
 
@@ -41,7 +45,27 @@ class Blockchain:
         return verifier.verify(hashed_trx,binascii.unhexlify(signature))
 
     def submit_transaction(self, sender_address, receiver_address, value, signature):
-        pass
+        """
+        Add a transaction to the transaction array if it be valid
+        :param sender_address: the address (public_key) of sender
+        """
+        transaction =OrderedDict({
+            'sender_address':sender_address,
+            'receiver_address':receiver_address,
+            'value':value
+        })
+        #mining reward
+        if sender_address== MINNING_SENDER:
+            self.transactions.append(transaction)
+            return len(self.chain)+1
+        #sending to another wallet
+        transaction_validity=self.verify_transaction_signature(sender_address,signature,transaction)
+        if transaction_validity==True:
+            self.transactions.append(transaction)
+            return len(self.chain)+1
+        else:
+            return False
+
 
     def create_block(self, nonce, previous_hash=None):
         """
@@ -61,14 +85,16 @@ class Blockchain:
         block_str=json.dump(block,sort_keys=True).encode()
         return sha256(block_str).hexdigest()
 
-    def proof_of_work(self,last_nonce,difficulty=4):
+    def proof_of_work(self,difficulty=4):
         """
         proof of work algorithm:
         finds the nonce that expression '{last_nonce}{nonce}' ends in 4 zeroes
         :param last_nonce: <int> the nonce of last block
-        :param difficulty" <int> the numb of ending zeroes
+        :param difficulty" <int> the number of ending zeroes
         :return: <int> newly found nonce
         """
+        last_block=self.last_block
+        last_nonce=last_block["nonce"]
         nonce=0
         while self.validate_nonce(last_nonce,nonce,difficulty) is False:
             nonce +=1
@@ -86,7 +112,7 @@ class Blockchain:
         """
         expr=f'{last_nonce}{nonce}'.encode()
         expr_hash=sha256(expr).hexdigest()
-        return expr_hash[:-4]=="0"*difficutly
+        return expr_hash[:-4]==("0"*difficutly)
 
     def valid_chain(self):
         pass
