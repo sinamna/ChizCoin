@@ -1,9 +1,12 @@
 from uuid import uuid4
 from Crypto.Hash import SHA256
+from Crypto.PublicKey import RSA
+from Crypto.Signature import PKCS1_v1_5
 from hashlib import sha256
 from urllib.parse import urlparse
 import json
 import time
+import binascii
 
 class Blockchain:
 
@@ -28,7 +31,14 @@ class Blockchain:
             raise ValueError('invalid URL')
 
     def verify_transaction_signature(self, sender_address, signature, transaction):
-        pass
+        """
+        checks the signature of transaction is signed by the public key
+        :param sender_address: the public key
+        """
+        public_key=RSA.import_key(binascii.unhexlify(sender_address))
+        verifier=PKCS1_v1_5.new(public_key)
+        hashed_trx=SHA256.new(str(transaction).encode('utf8'))
+        return verifier.verify(hashed_trx,binascii.unhexlify(signature))
 
     def submit_transaction(self, sender_address, receiver_address, value, signature):
         pass
