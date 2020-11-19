@@ -1,6 +1,7 @@
 from uuid import uuid4
 from Crypto.Hash import SHA256
 from hashlib import sha256
+from urllib.parse import urlparse
 import json
 import time
 
@@ -15,7 +16,16 @@ class Blockchain:
         #creating genesis block
 
     def register_node(self, node_url):
-        pass
+        """
+        adds new node to list of nodes
+        """
+        parse_url=urlparse(node_url)
+        if parse_url.netloc :
+            self.nodes.add(parse_url.netloc)
+        elif parse_url.path:
+            self.nodes.add(parse_url.path)
+        else:
+            raise ValueError('invalid URL')
 
     def verify_transaction_signature(self, sender_address, signature, transaction):
         pass
