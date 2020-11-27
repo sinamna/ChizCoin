@@ -192,7 +192,14 @@ def get_transactions():
     }
     return jsonify(response),200
 #get chain
-
+@app.route('/chain', methods=['GET'])
+def get_full_chain():
+    chain=blockchain.chain
+    response={
+        'chain':chain,
+        'length':len(chain)
+    }
+    return jsonify(response), 200
 # mine
 
 #registering node
