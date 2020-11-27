@@ -182,7 +182,15 @@ def new_transaction():
         return jsonify(response),201
 
 # get transactions
-
+@app.route('transactions/get',methods=['GET'])
+def get_transactions():
+    #getting the transactions from mempool
+    transactions=blockchain.transactions
+    response={
+        'message':'current transactions in the mempool',
+        'transactions':transactions
+    }
+    return jsonify(response),200
 #get chain
 
 # mine
