@@ -9,6 +9,8 @@ import json
 import time
 import binascii
 from time import time
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 MINNING_SENDER="BLOCKCHAIN"
 MINNING_REWARD=50
@@ -134,3 +136,27 @@ class Blockchain:
 
     def resolve_conflicts(self):
         pass
+
+
+
+# blockchain fucking api :)
+app=Flask(__name__)
+CORS(app)
+
+# the index page
+
+# configure page
+
+# new transaction
+
+# get transactions
+
+#get chain
+
+# mine
+
+#registering node
+
+# resolving conflicts
+
+#getting nodes
