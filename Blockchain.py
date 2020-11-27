@@ -8,6 +8,7 @@ from urllib.parse import urlparse
 import json
 import time
 import binascii
+from time import time
 
 MINNING_SENDER="BLOCKCHAIN"
 MINNING_REWARD=50
@@ -15,7 +16,7 @@ MINNING_REWARD=50
 class Blockchain:
 
     def __init__(self):
-        self.transactions = []
+        self.transactions = [] # kinda the mempool
         self.chain = []
         self.nodes = set()
         self.node_id = str(uuid4()).replace('-', ' ')
@@ -55,7 +56,7 @@ class Blockchain:
             'value':value
         })
         #mining reward
-        if sender_address== MINNING_SENDER:
+        if sender_address== MINNING_SENDER: # MINNING_SENDER is the blockchain it self
             self.transactions.append(transaction)
             return len(self.chain)+1
         #sending to another wallet
@@ -74,7 +75,17 @@ class Blockchain:
         :param previous_hash: <str> the hash of the previous block (none for genesis block)
         :return: <dict> the newly created block
         """
-        pass
+        block={
+            'index':len(self.chain)+1,
+            'timestamp':time(),
+            'transactions':self.transactions,
+            'nonce':nonce,
+            'previous_hash':previous_hash or self.hash_block(self.chain[-1]),
+        }
+        #clearing the current list of transaction
+        self.transactions=[]
+        self.chain.append(block)
+        return block
 
     @staticmethod
     def hash_block(block):
