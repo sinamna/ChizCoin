@@ -142,12 +142,44 @@ class Blockchain:
 # blockchain fucking api :)
 app=Flask(__name__)
 CORS(app)
-
+blockchain=Blockchain()
 # the index page
-
+@app.route('/')
+def index():
+    # should render index.html from templates
+    pass
 # configure page
-
+@app.route('/configure')
+def configure():
+    #should render configure.html from templates
+    pass
 # new transaction
+@app.route('/transactions/new', methods=['POST'])
+def new_transaction():
+    #post contains a from
+    form=request.form
+    required_fields=['sender_address', 'receiver_address', 'amount', 'signature']
+    #checks that all values be present in form
+    if not all(field in form for field in required_fields):
+        return 'Missing value', 400
+
+    sender_address=form['sender_address']
+    receiver_address=form['receiver_address']
+    amount=form['amount']
+    signature=form['signature']
+    transaction_result=blockchain.submit_transaction(sender_address,receiver_address,amount,signature)
+
+    if transaction_result==False:
+        response={
+            'message':'Invalid Transaction!',
+        }
+        #406 is 'not acceptable' response :")
+        return jsonify(response), 406
+    else :
+        response={
+            'message':'Transaction will be added to block'+str(transaction_result)
+        }
+        return jsonify(response),201
 
 # get transactions
 
@@ -168,4 +200,4 @@ if __name__=='__main__':
     args=parser.parse_args()
     port=args.port
 
-    app.run(host=git '127.0.0.1', port=port)
+    app.run(host='127.0.0.1', port=port)
