@@ -11,6 +11,7 @@ import binascii
 from time import time
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+import requests
 
 MINNING_SENDER = "BLOCKCHAIN"
 MINNING_REWARD = 50
@@ -149,7 +150,24 @@ class Blockchain:
         return self.chain[-1]
 
     def resolve_conflicts(self):
-        pass
+        other_nodes=self.nodes
+        new_chain=None
+        chain_max_length=len(self.chain)
+        for node in other_nodes:
+            print(f'http://{node}/chain')
+            response=requests.get(f'http://{node}/chain')
+            if response.status_code==200:
+                length=response.json()['length']
+                chain=response.json()['chain']
+
+                if length > chain_max_length and self.valid_chain(chain):
+                    chain_max_length=length
+                    new_chain=chain
+
+        if new_chain:
+            self.chain=new_chain
+            return True
+        return False
 
 
 # blockchain fucking api :)
