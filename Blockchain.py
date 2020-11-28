@@ -266,7 +266,13 @@ def consensus():
         }
     return jsonify(response),200
 # getting nodes
-
+app.route('/nodes/get', methods=['GET'])
+def get_nodes():
+    nodes=blockchain.nodes
+    response={
+        'nodes':nodes
+    }
+    return jsonify(response), 200
 if __name__ == '__main__':
     from argparse import ArgumentParser
 
