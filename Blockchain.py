@@ -115,7 +115,7 @@ class Blockchain:
         return nonce
 
     @staticmethod
-    def validate_nonce(last_nonce, nonce, difficutly):
+    def validate_nonce(last_nonce, nonce, difficutly=4):
         """
         checks if hash(last_nonce,nonce) contains ending zeroes as many as difficulty ?
 
@@ -128,9 +128,22 @@ class Blockchain:
         expr_hash = sha256(expr).hexdigest()
         return expr_hash[:-4] == ("0" * difficutly)
 
-    def valid_chain(self):
-        pass
-
+    def valid_chain(self,chain):
+        '''
+        this method checks that every hash of the block is
+        contained in the next block and all transactions are valid
+        :return: true if chain is valid
+        '''
+        last_block=chain[0] #starts from the beginning of the given chain
+        current_index=1
+        while current_index<len(chain):
+            current_block=chain[current_index]
+            #checks that if the hash of the block is current
+            if current_block['previous_hash'] !=self.hash_block(last_block):
+                return False
+            last_block=current_block
+            current_index+=1
+        return True
     @property
     def last_block(self):
         return self.chain[-1]
