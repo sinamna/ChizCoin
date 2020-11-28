@@ -236,7 +236,20 @@ def mine():
 
 
 # registering node
-
+@app.route('/nodes/register', methods=['POST'])
+def register_nodes():
+    #the front will be sending a form
+    form=request.form
+    nodes_to_register=form.get('nodes').replace(" ","").split(',')
+    if nodes_to_register is None:
+        return 'the list of nodes was not valid',400
+    for node in nodes_to_register:
+        blockchain.register_node(node)
+    response={
+        'message':'new node have been added',
+        'blockchain nodes':[node for node in blockchain.nodes]
+    }
+    return jsonify(response),201
 # resolving conflicts
 
 # getting nodes
