@@ -251,7 +251,20 @@ def register_nodes():
     }
     return jsonify(response),201
 # resolving conflicts
-
+@app.route('/nodes/resolve', methods=['GET'])
+def consensus():
+    replaced_chain=blockchain.resolve_conflicts()
+    if replaced_chain:
+        response={
+            'message':'Our chain was replaced',
+            'new_chain':blockchain.chain
+        }
+    else:
+        response={
+            'message':'Our chain is valid',
+            'chain':blockchain.chain
+        }
+    return jsonify(response),200
 # getting nodes
 
 if __name__ == '__main__':
