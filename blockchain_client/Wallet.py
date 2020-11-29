@@ -12,7 +12,6 @@ class Wallet:
     @property
     def address(self):
         '''
-
         :return:  the public key as the address of wallet
         '''
         return binascii.unhexlify(self._public_key.export_key(format="DER")).decode('ascii')
