@@ -29,5 +29,20 @@ def create_wallet():
     return jsonify(response),201
 
 #generating transacion
+@app.route('/transactions/generate',methods=['POST'])
+def generate_transactions():
+    form=request.form
+    sender_address=form['sender_address']
+    sender_private_key=form['sender_private_key']
+    receiver_address=form['receiver_address']
+    transferred_amount=form['amount']
+    transaction=Transaction(sender_address,sender_private_key,receiver_address,transferred_amount)
+    response={
+        'transaction':transaction.to_dict(),
+        'signature':transaction.sign_transaction()
+    }
+    return jsonify(response),200
+
+
 
 
