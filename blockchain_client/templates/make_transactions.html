@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{%block content%}
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-lg-12">
+                <div class="card-body">
+                    <h3 class="card-title mb-2">
+                        Send your <span style='color:rgb(179,134,0)'>Chiz</span>
+                    </h3>
+                    <p class="card-text">
+                        Enter your transaction info and transfer <span style='color:rgb(179,134,0)'>Chizs</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="container alert alert-secondary bg-secondary text-white">
+        <form id="transaction_form">
+            <div class=" mt-1 row">
+                <label for="sender_address" class="col-sm-2">Sender Address:</label>
+                <div class="col-sm-10">
+                    <input type="text" name="sender_address" id="sender_address" rows="2" class="form-control">
+                </div>
+            </div>
+            <br>
+            <div class=" mt-2 row">
+                <label class="col-sm-2">Sender Private Address:</label>
+                <div class="col-sm-10">
+                    <input type="text" name="sender_address" id="sender_address" rows="2" class="form-control">
+                </div>
+            </div>
+            <br>
+
+            <div class=" mt-2 row">
+                <label class="col-sm-2">Receiver Address:</label>
+                <div class="col-sm-10">
+                    <input type="text" name="sender_address" id="sender_address" rows="2" class="form-control">
+                </div>
+            </div>
+            <br>
+
+            <div class=" mt-2 row">
+                <label class="col-sm-2"><span style='color:rgb(179,134,0)'>Chiz</span> Amount</label>
+                <div class="col-sm-10">
+                    <input type="text" name="sender_address" id="sender_address" rows="2" class="form-control">
+                </div>
+            </div>
+            <br>
+
+            <div class="row mb-2 text-center">
+                <div class="col-lg-12">
+                    <input type="button" value="Transfer Chiz" class="btn text-white btn-lg bg-dark" id="generate_transactions">
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
