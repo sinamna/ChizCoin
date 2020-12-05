@@ -1,0 +1,38 @@
+{% extends "base.html"%}
+{%block content%}
+
+<div class="container">
+    <div class="containter mt-3 mb-3 pb-2 pt-2">
+        <div class="row ">
+            <div class="col-lg-12 text-center">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title mt-2">
+                            View Transactions
+                        </h3>
+                        <p class="card-text">
+                            Enter node URL and click "View Transaction" button to view transactions in blockchain
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="containter alert alert-dark">
+        <div class="row">
+            <label for="" class="col-sm-2">Node URL :</label>
+            <div class="col-sm-10">
+                <textarea name="node_url" class="form-control" id="node_url" rows="1"></textarea>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <input type="button" id="view-transactions" value="View Transactions" class="btn text-white btn-lg bg-dark">
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
