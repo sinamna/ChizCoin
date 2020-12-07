@@ -7,20 +7,21 @@ class Wallet:
     """
     def __init__(self):
         random_seed=Random.new().read
-        self._private_key=RSA.generate(1024,random_seed)
+        self._private_key=RSA.generate(2048,random_seed)
         self._public_key=self._private_key.publickey()
     @property
     def address(self):
         '''
         :return:  the public key as the address of wallet
         '''
-        return binascii.unhexlify(self._public_key.export_key(format="DER")).decode('ascii')
-
+        return binascii.hexlify(self._public_key.exportKey(format='DER')).decode('ascii')
+        
     def to_dict(self):
         '''
         :return: dictionary representing the wallet
         '''
         return {
-            'private_key':binascii.unhexlify(self._private_key.export_key(format="DER")).decode('ascii'),
-            'public_key':binascii.unhexlify(self._public_key.export_key(format="DER")).decode('ascii')
+            'private_key':binascii.hexlify(self._private_key.export_key(format='DER')).decode('ascii'),
+            'public_key':binascii.hexlify(self._public_key.export_key(format='DER')).decode('ascii')
         }
+
