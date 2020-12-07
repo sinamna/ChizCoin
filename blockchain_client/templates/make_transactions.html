@@ -15,7 +15,7 @@
         </div>
     </div>
     <br>
-    <div class="container alert alert-secondary bg-secondary text-white">
+    <div class="container alert alert-secondary">
         <form id="transaction_form">
             <div class=" mt-1 row">
                 <label for="sender_address" class="col-sm-2">Sender Address:</label>
@@ -136,4 +136,8 @@
               </div>
             </div>
           </div>
+{% endblock %}
+{% block script%}
+<script src="../static/js/make_transaction.js"></script>
+
 {% endblock %}
