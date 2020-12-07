@@ -1,5 +1,4 @@
 {%extends "base.html"%}    
-{% block head%}{{super()}}{% endblock %}
 {% block content %} 
     <br>
     <div class="container">
@@ -24,15 +23,31 @@
         <div class="row text-center">
             <label class="col-sm-2 mt-5">Public Key:</label>
             <div class="col-md-10">
-                <textarea id="public-key"  rows="5" class="form-control" readonly></textarea>
+                <textarea id="public_key"  rows="6" class="form-control" readonly></textarea>
             </div>
         </div>
         <br>
         <div class="row text-center">
             <label class="col-sm-2 mt-5">Private Key:</label>
             <div class="col-md-10">
-                <textarea id="private-key"  rows="5" class="form-control" readonly></textarea>
+                <textarea id="private_key"  rows="6" class="form-control" readonly></textarea>
             </div>
         </div>
+        <div class="row " id="warning" style="display:none">
+            <div class="col-sm-12 mt-5">
+              <div class="alert alert-dark" role="alert">
+                IMPORTANT
+                <ul>
+                  <li>Save you private and public keys. These keys cannot be recovered!</li>
+                  <li>Don't share your private key with anyone!</li>
+                </ul> 
+              </div>
+            </div>
+          </div>
     </div>
+    
 {% endblock content %}
+{% block script%}
+<script src="../static/js/generate_wallet.js"></script>
+
+{% endblock %}
