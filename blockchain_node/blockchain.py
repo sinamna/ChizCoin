@@ -283,7 +283,6 @@ def register_nodes():
     if nodes_to_register is None:
         return 'the list of nodes was not valid',400
     for node in nodes_to_register:
-        print(node)
         blockchain.register_node(node)
     response={
         'message':'new node have been added',
@@ -306,9 +305,10 @@ def consensus():
         }
     return jsonify(response),200
 # getting nodes
-app.route('/nodes/get', methods=['GET'])
+@app.route('/nodes/get', methods=['GET'])
 def get_nodes():
-    nodes=blockchain.nodes
+    nodes=list(blockchain.nodes)
+    print(nodes)
     response={
         'nodes':nodes
     }

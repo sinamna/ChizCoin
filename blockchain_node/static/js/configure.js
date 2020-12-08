@@ -17,4 +17,22 @@ $("#add_node_btn").click(()=>{
         }
     });
 });
+
+$.ajax({
+    url:"/nodes/get",
+    type:'GET',
+    success:(response)=>{
+        let node=""
+        const nodes=response['nodes'];
+        for(let i=0;i<nodes.length;i++){
+            node= `<a href="http://${nodes[i]}" class="list-group-item list-group-item-action list-group-item-dark">${nodes[i]}</a>`
+            document.getElementById("nodes_list").innerHTML+=node;
+        }
+    },
+    error:(error)=>{
+        console.log(error);
+    }
+});
+
+
 });
