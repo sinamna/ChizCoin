@@ -1,0 +1,49 @@
+{%extends "base.html"%}
+{% block content %}
+<div class="container mt-4 mb-5">
+    <div class="card text-center">
+        <div class="card-body">
+            <h4 class="card-title">Add <span style='color:rgb(179,134,0)'>Chiz</span> Nodes</h4>
+            <p class="card-text">
+                Enter a comma separated list and click on "Add Node" button
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="container alert alert-secondary">
+    <form id="node_form">
+        <div class="row">
+            <label for="node_urls" class="col-sm-12">Node Urls</label>
+            <div class="col-sm-12">
+                <input type="text" name="node_urls" id="node_urls" row="2" class="form-control">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <input type="text" value="Add Node" id="add_node_btn" class="btn text-white btn-lg bg-dark">
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="container text-center">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card-body">
+                <h5 class="card-title">
+                    This node can retrieve <span style='color:rgb(179,134,0)'>Chiz</span>Coin data from following <span style='color:rgb(179,134,0)'>Chiz</span> Nodes
+                </h5>
+            </div>
+        </div>
+        <div class="list-group" id="nodes_list">
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+{% block script%}
+<script src="../static/js/configure.js"></script>
+{%endblock%}

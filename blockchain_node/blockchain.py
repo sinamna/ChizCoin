@@ -279,10 +279,11 @@ def mine():
 def register_nodes():
     #the front will be sending a form
     form=request.form
-    nodes_to_register=form.get('nodes').replace(" ","").split(',')
+    nodes_to_register=form.get('node_urls').replace(" ","").split(',')
     if nodes_to_register is None:
         return 'the list of nodes was not valid',400
     for node in nodes_to_register:
+        print(node)
         blockchain.register_node(node)
     response={
         'message':'new node have been added',
