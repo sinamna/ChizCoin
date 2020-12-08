@@ -179,7 +179,8 @@ blockchain = Blockchain()
 # the index page
 @app.route('/')
 def index():
-    # should render index.html from templates
+    # should render index.html from tem
+    # plates
     return render_template("/index.html")
 
 
@@ -187,9 +188,16 @@ def index():
 @app.route('/configure')
 def configure():
     # should render configure.html from templates
-    pass
+    return render_template("/configure.html")
 
 
+@app.route('/mine/page')
+def mine_page():
+    return render_template("/mine_page.html")
+
+@app.route('/transactions/current')
+def current_transactions():
+    return render_template("/current_transactions.html")
 # new transaction
 @app.route('/transactions/new', methods=['POST'])
 def new_transaction():
@@ -243,7 +251,7 @@ def get_full_chain():
 
 
 # mine
-@app.route('/mine', methods=['GET'])
+@app.route('/mine/core', methods=['GET'])
 def mine():
     # we get the nonce of the last block in blockchain
     last_block = blockchain.chain[-1]

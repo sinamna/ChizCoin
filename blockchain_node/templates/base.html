@@ -1,19 +1,45 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<title>ChizCoin :)</title>
-		<!-- bootstrap -->
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+<html lang="en">
+<head>
+	<title>ChizCoin Node</title>
+    {%block head%}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!-- bootstrap -->
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+     {% endblock %}
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
+        <div class="container">
+            <a href="/" class="navbar-brand">
+                <img src="../static/pics/nav_brand.png" alt="navbar-brand" width="30" height="30" class="mr-2">
+                ChizCoin Node</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbar-content">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class ="nav-link" href="/transactions/current">Current Transactions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class ="nav-link"  href="/mine/page">Mine Chiz</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class ="nav-link"  href="/configure">Configure</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-	</head>
-	<body>
+    {%block content%}{% endblock %}
 
-
-
-		<!-- jQuery and Bootstrap Bundle -->
-	    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-	    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
-	</body>
+    <!-- jQuery and Bootstrap Bundle -->
+    <script src="../static/jquery/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    {%block script%}{% endblock %}
+</body>
 </html>
