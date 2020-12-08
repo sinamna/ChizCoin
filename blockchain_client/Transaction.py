@@ -26,4 +26,4 @@ class Transaction:
         private_key = RSA.import_key(binascii.unhexlify(self._sender_private_key))
         signer = PKCS1_v1_5.new(private_key)
         hashed_Trx = SHA256.new(str(self.to_dict()).encode('utf8'))
-        return binascii.unhexlify(signer.sign(hashed_Trx).decode('utf8'))
+        return binascii.hexlify(signer.sign(hashed_Trx)).decode('ascii')
