@@ -16,7 +16,7 @@ class Transaction:
         return ({
             'sender_address': self.sender_address,
             'receiver_address': self.receiver_address,
-            'value': self.value
+            'amount': self.value
         })
 
     def sign_transaction(self):
