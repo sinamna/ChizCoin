@@ -1,5 +1,5 @@
-import Transaction
-import Wallet
+from Transaction import Transaction
+from Wallet import Wallet
 from flask import Flask,jsonify,request,render_template
 
 app=Flask(__name__)
@@ -21,7 +21,7 @@ def view_transactions():
     return render_template('./view_transactions.html')
 
 #creating wallet
-app.route('/wallet/new',methods=['GET'])
+@app.route('/wallet/new',methods=['GET'])
 def create_wallet():
     wallet=Wallet()
     response=wallet.to_dict()
@@ -31,17 +31,20 @@ def create_wallet():
 #generating transacion
 @app.route('/transactions/generate',methods=['POST'])
 def generate_transactions():
-    form=request.form
-    sender_address=form['sender_address']
-    sender_private_key=form['sender_private_key']
-    receiver_address=form['receiver_address']
-    transferred_amount=form['amount']
-    transaction=Transaction(sender_address,sender_private_key,receiver_address,transferred_amount)
-    response={
-        'transaction':transaction.to_dict(),
-        'signature':transaction.sign_transaction()
-    }
-    return jsonify(response),200
+    if request.method=='POST':
+        form=request.form
+        sender_address=form['sender_address']
+        sender_private_key=form['sender_private_key']
+        receiver_address=form['receiver_address']
+        transferred_amount=form['amount']
+        transaction=Transaction(sender_address,sender_private_key,receiver_address,transferred_amount)
+        response={
+            'transaction':transaction.to_dict(),
+            'signature':transaction.sign_transaction()
+        }
+        return jsonify(response),200
+    else:
+        return 400
 
 if __name__=='__main__':
     from argparse import ArgumentParser
