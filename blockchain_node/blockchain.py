@@ -9,7 +9,7 @@ import json
 import time
 import binascii
 from time import time
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 import requests
 
@@ -180,7 +180,7 @@ blockchain = Blockchain()
 @app.route('/')
 def index():
     # should render index.html from templates
-    pass
+    return render_template("/index.html")
 
 
 # configure page
@@ -220,7 +220,7 @@ def new_transaction():
 
 
 # get transactions
-@app.route('transactions/get', methods=['GET'])
+@app.route('/transactions/get', methods=['GET'])
 def get_transactions():
     # getting the transactions from mempool
     transactions = blockchain.transactions
