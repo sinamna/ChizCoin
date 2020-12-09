@@ -34,4 +34,27 @@ $(document).ready(()=>{
         }
     });
 
+
+    $("#mine_button").click(function () {
+
+        $.ajax({
+          url: "/mine/core",
+          type: "GET",
+          success: function(response){
+
+            let modalCard=document.getElementById("mine-modal-card");
+            let title=`<h4 class="card-title">${response['message']}</h4>`;
+            let text= `<p class="card-text">
+                        block Number:${response['block_number']}<br> nonce:${response['nonce']}`;
+            modalCard.innerHTML+=title;
+            modalCard.innerHTML+=text;
+            $("#mineModal").modal('show')
+            window.location.reload();
+          },
+          error: function(error){
+            console.log(error);
+          }
+        });
+      });
+
 });
