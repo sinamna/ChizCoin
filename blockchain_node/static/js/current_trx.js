@@ -24,18 +24,34 @@ $(document).ready(()=>{
                             index,
                             trx["receiver_address"],
                             trx["sender_address"],
-                            trx["amount"]
+                            trx["amount"],
+                            formattedDate,
+                            chain[i]["index"]
                         ]
                     );
                     index++;
                 };
             };
+            $("#current-trx-table").dataTable({
+                data:transactions,
+                columns:[{title:"#"},
+                        {title:"Receiver Address"},
+                        {title:"Sender Address"},
+                        {title:"Chiz Amount"},
+                        {title:"timestamp"},
+                        {title:"Block Id"}],
+                    columnDefs: [ {targets: [1,2,3,4,5], render: $.fn.dataTable.render.ellipsis( 25 )}]
+                } );
         },
-        error:error=>{
+        error:(error)=>{
             console.log(error);
         }
 
     });
+
+
+
+
 
 
 
