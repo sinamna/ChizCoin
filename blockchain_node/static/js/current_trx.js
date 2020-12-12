@@ -43,13 +43,26 @@ $(document).ready(()=>{
                     columnDefs: [ {targets: [1,2,3,4,5], render: $.fn.dataTable.render.ellipsis( 25 )}]
                 } );
         },
-        error:(error)=>{
+        error:error=>{
             console.log(error);
         }
 
     });
 
+    $("#refresh-blockchain-btn").click(()=>{
 
+
+        $.ajax({
+            url:"/nodes/resolve",
+            type:"GET",
+            success:response=>{
+                window.location.reload();
+            },
+            error:error=>{
+                console.log(error);
+            }
+        })
+    })
 
 
 
