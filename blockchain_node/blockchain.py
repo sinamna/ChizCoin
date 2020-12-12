@@ -265,7 +265,7 @@ def mine():
     new_block=blockchain.create_block(nonce,previous_hash)
 
     response={
-        'message':'new block added to blockchain',
+        'message':'New block added to blockchain',
         'block_number':new_block['block_number'],
         'transactions':new_block['transactions'],
         'nonce':new_block['nonce'],
