@@ -18,8 +18,6 @@ $(document).ready(()=>{
 
 
             $("#mempool-table").dataTable({
-                paging:false,
-                scrollY:400,
                 data:transactions,
                 columns:[{title:"#"},
                          {title:"Receiver Address"},
