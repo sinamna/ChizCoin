@@ -49,7 +49,7 @@ class Blockchain:
         hashed_trx = SHA256.new(str(transaction).encode('utf8'))
         return verifier.verify(hashed_trx, binascii.unhexlify(signature))
 
-    def submit_transaction(self, sender_address, receiver_address, value, signature):
+    def submit_transaction(self, sender_address, receiver_address, amount, signature):
         """
         Add a transaction to the transaction array if it be valid
         :param sender_address: the address (public_key) of sender
@@ -57,7 +57,7 @@ class Blockchain:
         transaction = OrderedDict({
             'sender_address': sender_address,
             'receiver_address': receiver_address,
-            'value': value
+            'amount': amount
         })
         # mining reward
         if sender_address == MINNING_SENDER:  # MINNING_SENDER is the blockchain it self

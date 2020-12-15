@@ -19,7 +19,7 @@ $("#generate_transactions").click(()=>{
 });
 
 
-$("#confirm-transaction_button").click(()=>{
+$("#confirm_transaction_button").click(()=>{
     node_url=document.getElementById("node_url").value;
     $.ajax({
         url:node_url+"transactions/new",
