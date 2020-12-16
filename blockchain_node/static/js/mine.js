@@ -1,6 +1,5 @@
 $(document).ready(()=>{
     //creating mempool table
-
     $.ajax({
         url:"/transactions/get",
         type:'GET',
@@ -54,5 +53,7 @@ $(document).ready(()=>{
           }
         });
       });
-
+      $("#refresh_btn").click(()=>{
+        window.location.reload();
+      })
 });

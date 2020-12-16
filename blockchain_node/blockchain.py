@@ -91,13 +91,16 @@ class Blockchain:
         self.chain.append(block)
         return block
 
+    def create_genesis_block(self):
+        self.create_block(0,"00")
+
     @staticmethod
     def hash_block(block):
         """
         :param block: <dict> block
         :return: <str> the SHA-256 hash of block
         """
-        block_str = json.dump(block, sort_keys=True).encode()
+        block_str = json.dumps(block, sort_keys=True).encode()
         return sha256(block_str).hexdigest()
 
     def proof_of_work(self, difficulty=4):
@@ -111,13 +114,13 @@ class Blockchain:
         last_block = self.last_block
         last_nonce = last_block["nonce"]
         nonce = 0
-        while self.validate_nonce(last_nonce, nonce, difficulty) is False:
+        while not self.validate_nonce(last_nonce, nonce, difficulty):
             nonce += 1
 
         return nonce
 
     @staticmethod
-    def validate_nonce(last_nonce, nonce, difficutly=4):
+    def validate_nonce(last_nonce, nonce, difficutly=1):
         """
         checks if hash(last_nonce,nonce) contains ending zeroes as many as difficulty ?
 
@@ -126,9 +129,11 @@ class Blockchain:
         :return:  <bool> true if condition is true
 
         """
+        # print(nonce, end="\n")
         expr = f'{last_nonce}{nonce}'.encode()
         expr_hash = sha256(expr).hexdigest()
-        return expr_hash[:-4] == ("0" * difficutly)
+        print(expr_hash)
+        return expr_hash[-1] == "0"
 
     def valid_chain(self,chain):
         '''
@@ -169,12 +174,12 @@ class Blockchain:
             self.chain=new_chain
             return True
         return False
-
-
+    
 # blockchain fucking api :)
 app = Flask(__name__)
 CORS(app)
 blockchain = Blockchain()
+blockchain.create_genesis_block()
 
 
 # the index page
@@ -213,7 +218,6 @@ def new_transaction():
     receiver_address = form['receiver_address']
     amount = form['amount']
     signature = form['signature']
-    print(dict(form))
     transaction_result = blockchain.submit_transaction(sender_address, receiver_address, amount, signature)
 
     if transaction_result == False:
@@ -256,19 +260,19 @@ def get_full_chain():
 @app.route('/mine/core', methods=['GET'])
 def mine():
     # we get the nonce of the last block in blockchain
-    last_block = blockchain.chain[-1]
+    last_block = blockchain.last_block
     nonce = blockchain.proof_of_work()  # we can set the difficulty manualy too
 
     # reserving a reward for ourself
     blockchain.submit_transaction(sender_address=MINNING_SENDER, receiver_address=blockchain.node_id,
-                                  value=MINNING_REWARD, signature="")
+                                  amount=MINNING_REWARD, signature="")
 
     previous_hash=blockchain.hash_block(last_block)
     new_block=blockchain.create_block(nonce,previous_hash)
 
     response={
         'message':'New block added to blockchain',
-        'block_number':new_block['block_number'],
+        'block_number':new_block['index'],
         'transactions':new_block['transactions'],
         'nonce':new_block['nonce'],
         'previous_hash':new_block['previous_hash']
