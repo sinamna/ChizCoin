@@ -64,12 +64,13 @@ class Blockchain:
             self.transactions.append(transaction)
             return len(self.chain) + 1
         # sending to another wallet
-        transaction_validity = self.verify_transaction_signature(sender_address, signature, transaction)
-        if transaction_validity == True:
-            self.transactions.append(transaction)
-            return len(self.chain) + 1
         else:
-            return False
+            transaction_validity = self.verify_transaction_signature(sender_address, signature, transaction)
+            if transaction_validity == True:
+                self.transactions.append(transaction)
+                return len(self.chain) + 1
+            else:
+                return False
 
     def create_block(self, nonce, previous_hash=None):
         """
@@ -212,6 +213,7 @@ def new_transaction():
     receiver_address = form['receiver_address']
     amount = form['amount']
     signature = form['signature']
+    print(dict(form))
     transaction_result = blockchain.submit_transaction(sender_address, receiver_address, amount, signature)
 
     if transaction_result == False:

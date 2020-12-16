@@ -1,4 +1,5 @@
 import binascii
+from collections import OrderedDict
 from Crypto.PublicKey import RSA
 from Crypto.Signature import PKCS1_v1_5
 from Crypto.Hash import SHA256
@@ -13,7 +14,7 @@ class Transaction:
         '''
         return: a dictionary representing transaction
         '''
-        return ({
+        return OrderedDict ({
             'sender_address': self.sender_address,
             'receiver_address': self.receiver_address,
             'amount': self.value
