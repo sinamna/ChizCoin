@@ -18,7 +18,7 @@ $(document).ready(()=>{
                 let chain =response.chain;
                 for(j=0;j<chain[i].transactions.length;j++){
                     let currentDate=new Date(chain[i].transactions.timestamp*1000);
-                    let formattedDate=date.toLocaleTimeString("en-us",options);
+                    let formattedDate=currentDate.toLocaleTimeString("en-us",dateOptions);
                     const trx=chain[i].transactions[j];
                     transactions.push([
                             index,
