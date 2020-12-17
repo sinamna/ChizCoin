@@ -3,3 +3,5 @@ blockchain_client/__pycache__/Transaction.cpython-38.pyc
 blockchain_client/__pycache__/Wallet.cpython-38.pyc
 blockchain_client/static/vendor
 blockchain_node/static/vendor
+blockchain_node/templates
+blockchain_client/templates
