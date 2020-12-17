@@ -24,29 +24,7 @@
         <input type="button" id="refresh_btn" class="btn text-white btn-lg bg-dark" value="Refresh">
       </div>
 </div>
-<!-- Modal -->
-  <!-- <div class="modal fade" id="mineModal" tabindex="-1" role="dialog" aria-labelledby="mineModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="mineModalLabel">Mine Result</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <div class="card">
-                <div class="card-body" id="mine-modal-card">
 
-                </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div> -->
   <!-- Alert Message for successful mine -->
   <div class="modal modal-alert fade" id="mining_result" tabindex="-1" aria-labelledby="mine_title" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
@@ -73,7 +51,6 @@
                   <input type="text" id="nonce" rows="2" class="form-control" readonly>
                 </div>
               </div>
-              </div>
             </form>
           </div>
           <div class="modal-footer">
@@ -85,7 +62,7 @@
   </div>
 {% endblock %}
 {% block script%}
-<script src="../static/DataTables/datatables.min.js"></script>
-<script src="../static/DataTables/ellipsis.js"></script>
+<script src="../static/vendor/DataTables/datatables.min.js"></script>
+<script src="../static/vendor/DataTables/ellipsis.js"></script>
 <script src="../static/js/mine.js"></script>
 {%endblock%}
