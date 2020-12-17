@@ -92,7 +92,7 @@ class Blockchain:
         return block
 
     def create_genesis_block(self):
-        self.create_block(0,"00")
+        self.create_block(0, "00")
 
     @staticmethod
     def hash_block(block):
@@ -135,46 +135,48 @@ class Blockchain:
         print(expr_hash)
         return expr_hash[-1] == "0"
 
-    def valid_chain(self,chain):
+    def valid_chain(self, chain):
         '''
         this method checks that every hash of the block is
         contained in the next block and all transactions are valid
         :return: true if chain is valid
         '''
-        last_block=chain[0] #starts from the beginning of the given chain
-        current_index=1
-        while current_index<len(chain):
-            current_block=chain[current_index]
-            #checks that if the hash of the block is current
-            if current_block['previous_hash'] !=self.hash_block(last_block):
+        last_block = chain[0]  # starts from the beginning of the given chain
+        current_index = 1
+        while current_index < len(chain):
+            current_block = chain[current_index]
+            # checks that if the hash of the block is current
+            if current_block['previous_hash'] != self.hash_block(last_block):
                 return False
-            last_block=current_block
-            current_index+=1
+            last_block = current_block
+            current_index += 1
         return True
+
     @property
     def last_block(self):
         return self.chain[-1]
 
     def resolve_conflicts(self):
-        other_nodes=self.nodes
-        new_chain=None
-        chain_max_length=len(self.chain)
+        other_nodes = self.nodes
+        new_chain = None
+        chain_max_length = len(self.chain)
         for node in other_nodes:
             print(f'http://{node}/chain')
-            response=requests.get(f'http://{node}/chain')
-            if response.status_code==200:
-                length=response.json()['length']
-                chain=response.json()['chain']
+            response = requests.get(f'http://{node}/chain')
+            if response.status_code == 200:
+                length = response.json()['length']
+                chain = response.json()['chain']
 
                 if length > chain_max_length and self.valid_chain(chain):
-                    chain_max_length=length
-                    new_chain=chain
+                    chain_max_length = length
+                    new_chain = chain
 
         if new_chain:
-            self.chain=new_chain
+            self.chain = new_chain
             return True
         return False
-    
+
+
 # blockchain fucking api :)
 app = Flask(__name__)
 CORS(app)
@@ -201,9 +203,12 @@ def configure():
 def mine_page():
     return render_template("/mine_page.html")
 
+
 @app.route('/transactions/current')
 def current_transactions():
     return render_template("/current_transactions.html")
+
+
 # new transaction
 @app.route('/transactions/new', methods=['POST'])
 def new_transaction():
@@ -260,7 +265,7 @@ def get_full_chain():
 @app.route('/mine/core', methods=['GET'])
 def mine():
     if not blockchain.transactions:
-        return "there is no transaction to mine" ,400
+        return "there is no transaction to mine", 400
     # we get the nonce of the last block in blockchain
     last_block = blockchain.last_block
     nonce = blockchain.proof_of_work()  # we can set the difficulty manualy too
@@ -269,58 +274,64 @@ def mine():
     blockchain.submit_transaction(sender_address=MINNING_SENDER, receiver_address=blockchain.node_id,
                                   amount=MINNING_REWARD, signature="")
 
-    previous_hash=blockchain.hash_block(last_block)
-    new_block=blockchain.create_block(nonce,previous_hash)
+    previous_hash = blockchain.hash_block(last_block)
+    new_block = blockchain.create_block(nonce, previous_hash)
 
-    response={
-        'message':'New block added to blockchain',
-        'block_number':new_block['index'],
-        'transactions':new_block['transactions'],
-        'nonce':new_block['nonce'],
-        'previous_hash':new_block['previous_hash']
+    response = {
+        'message': 'New block added to blockchain',
+        'block_number': new_block['index'],
+        'transactions': new_block['transactions'],
+        'nonce': new_block['nonce'],
+        'previous_hash': new_block['previous_hash']
     }
-    return jsonify(response),200
+    return jsonify(response), 200
 
 
 # registering node
 @app.route('/nodes/register', methods=['POST'])
 def register_nodes():
-    #the front will be sending a form
-    form=request.form
-    nodes_to_register=form.get('node_urls').replace(" ","").split(',')
+    # the front will be sending a form
+    form = request.form
+    nodes_to_register = form.get('node_urls').replace(" ", "").split(',')
     if nodes_to_register is None:
-        return 'the list of nodes was not valid',400
+        return 'the list of nodes was not valid', 400
     for node in nodes_to_register:
         blockchain.register_node(node)
-    response={
-        'message':'new node have been added',
-        'blockchain nodes':[node for node in blockchain.nodes]
+    response = {
+        'message': 'new node have been added',
+        'blockchain nodes': [node for node in blockchain.nodes]
     }
-    return jsonify(response),201
+    return jsonify(response), 201
+
+
 # resolving conflicts
 @app.route('/nodes/resolve', methods=['GET'])
 def consensus():
-    replaced_chain=blockchain.resolve_conflicts()
+    replaced_chain = blockchain.resolve_conflicts()
     if replaced_chain:
-        response={
-            'message':'Our chain was replaced',
-            'new_chain':blockchain.chain
+        response = {
+            'message': 'Our chain was replaced',
+            'new_chain': blockchain.chain
         }
     else:
-        response={
-            'message':'Our chain is valid',
-            'chain':blockchain.chain
+        response = {
+            'message': 'Our chain is valid',
+            'chain': blockchain.chain
         }
-    return jsonify(response),200
+    return jsonify(response), 200
+
+
 # getting nodes
 @app.route('/nodes/get', methods=['GET'])
 def get_nodes():
-    nodes=list(blockchain.nodes)
+    nodes = list(blockchain.nodes)
     print(nodes)
-    response={
-        'nodes':nodes
+    response = {
+        'nodes': nodes
     }
     return jsonify(response), 200
+
+
 if __name__ == '__main__':
     from argparse import ArgumentParser
 
