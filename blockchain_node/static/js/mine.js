@@ -38,18 +38,22 @@ $(document).ready(()=>{
           url: "/mine/core",
           type: "GET",
           success: function(response){
-
-            let modalCard=document.getElementById("mine-modal-card");
-            let title=`<h4 class="card-title">${response['message']}</h4>`;
-            let text= `<p class="card-text">
-                        block Number:${response['block_number']}<br> nonce:${response['nonce']}`;
-            modalCard.innerHTML+=title;
-            modalCard.innerHTML+=text;
-            $("#mineModal").modal('show')
-            window.location.reload();
+            $("#success-form").show();
+            $("#alert-div").addClass("alert-success");
+            $("#mine_title").text(response["message"]);
+            $("#block_index").val(response["block_number"]);
+            $("#nonce").val(response["nonce"]);
+            $("#mining_result").modal('show');
           },
           error: function(error){
-            console.log(error);
+            // let err=JSON.parse(xhr.responseText);
+            $("#success-form").hide();
+            $("#alert-div").hide();
+            $("#alert-div").addClass("alert-danger");
+            $("#mine_title").text("No transaction to mine");
+            $("#mining_result").modal('show');
+            console.log(error.message);
+            
           }
         });
       });

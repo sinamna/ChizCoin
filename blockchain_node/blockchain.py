@@ -259,6 +259,8 @@ def get_full_chain():
 # mine
 @app.route('/mine/core', methods=['GET'])
 def mine():
+    if not blockchain.transactions:
+        return "there is no transaction to mine" ,400
     # we get the nonce of the last block in blockchain
     last_block = blockchain.last_block
     nonce = blockchain.proof_of_work()  # we can set the difficulty manualy too

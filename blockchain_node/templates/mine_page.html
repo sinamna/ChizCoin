@@ -47,6 +47,42 @@
       </div>
     </div>
   </div> -->
+  <!-- Alert Message for successful mine -->
+  <div class="modal modal-alert fade" id="mining_result" tabindex="-1" aria-labelledby="mine_title" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="mine_title"></h4>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        </div>
+
+        <div class="modal-body">
+          <div class="alert" id="alert-div" role="alert">
+            <h4 class="alert-heading" id="alert-title">Success</h4>
+            <form id="success-form">
+              <div class="row">
+                <label for="block_index" class="col-sm-12">Block Index:</label>
+                <div class="col-sm-12">
+                  <input type="text" id="block_index" rows="2" class="form-control" readonly>
+                </div>
+              </div>
+
+              <div class="row">
+                <label for="nonce" class="col-sm-12">Nonce:</label>
+                <div class="col-sm-12">
+                  <input type="text" id="nonce" rows="2" class="form-control" readonly>
+                </div>
+              </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="button_confirm_transaction" class="btn btn-success" data-dismiss="modal">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
 {% block script%}
 <script src="../static/DataTables/datatables.min.js"></script>
