@@ -5,3 +5,4 @@ blockchain_client/static/vendor
 blockchain_node/static/vendor
 blockchain_node/templates
 blockchain_client/templates
+.idea

@@ -1,6 +1,10 @@
 # ChizCoin : a simple blockchain implementation using python
  in a very noob way, i used flask to build API and bootstrap to makeup a (so called) frontend and ajax to handle requests
  in general it was all for training .
+  #### Node Demo
+ ![ChizNode demo](node.gif)
+  #### Client Demo
+ ![ChizNode Client](client.gif)
 ## What is ChizCoin?
  ChizCoin consists of 2 main parts :
   1. ChizCoin Node: 
